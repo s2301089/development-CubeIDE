@@ -1,2 +1,2 @@
-# developmet-CubeIDE
+# development-CubeIDE
 by STM32 Cube IDE and write mdbook
