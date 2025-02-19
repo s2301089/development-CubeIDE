@@ -1,0 +1,6 @@
+[book]
+authors = ["s2301089"]
+language = "en"
+multilingual = false
+src = "src"
+title = "development-CubeIDE"
