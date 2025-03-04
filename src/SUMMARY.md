@@ -15,4 +15,3 @@
 
 # 共有
 - [binファイルの生成](./chapter_7.md)
-- [UART_Arduinoライブラリ(自作)](./chapter_8.md)
