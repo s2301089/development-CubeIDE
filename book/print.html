@@ -295,7 +295,7 @@ while (1)
 </ol>
 <blockquote>
 <p><code>teams</code>等にある場合が多い。<br />
-またｈ<code>github</code>上にある。<a href="https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino">ここ</a>からダウンロード。</p>
+または<code>github</code>上にある。<a href="https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino">ここ</a>からダウンロード。</p>
 </blockquote>
 <ol start="2">
 <li>ダウンロードした<code>ヘッダファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Inc</code>に、<code>ソースファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Src</code>に移動。</li>
@@ -310,10 +310,8 @@ while (1)
 <li><code>manydef.h</code>はピンを簡単にしたもの。</li>
 </ol>
 <blockquote>
-<p>例</p>
-<blockquote>
-<p><code>GPIOA</code>→<code>PA</code>,<code>GPIO_PIN_0</code>→<code>P0</code></p>
-</blockquote>
+<p>例<br />
+<code>GPIOA</code>→<code>PA</code>,<code>GPIO_PIN_0</code>→<code>P0</code></p>
 </blockquote>
 <p><strong>使用例</strong>
 <code>main.c</code></p>
@@ -351,9 +349,9 @@ while (1)
 // 略
 </code></pre>
 <p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。また、<code>getdata</code>型の<code>data</code>という名前の構造体変数を宣言し、<code>getData関数</code>に引数として<code>data</code>のアドレスを渡している。</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: center">getDataの戻り値(int型)</th><th style="text-align: left">意味</th></tr></thead><tbody>
-<tr><td style="text-align: center">0</td><td style="text-align: left">構造体に値が格納された</td></tr>
-<tr><td style="text-align: center">-1</td><td style="text-align: left">先頭データではない値</td></tr>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">getDataの戻り値(int型)</th><th style="text-align: center">意味</th></tr></thead><tbody>
+<tr><td style="text-align: center">0</td><td style="text-align: center">構造体に値が格納された</td></tr>
+<tr><td style="text-align: center">-1</td><td style="text-align: center">先頭データではない値</td></tr>
 </tbody></table>
 </div>
 <p><code>AllShowP</code>は各アナログ値と押されているボタンを表示する関数。使用例にはないが<code>AllShow</code>は各アナログ値とすべてのボタンの状態を<code>0/1</code>で表示する関数。表示はすべて<code>printf</code>で行われる。</p>
@@ -367,6 +365,73 @@ while (1)
 <ul>
 <li><a href="https://yukblog.net/stm32cubeide-hex/">STM32CubeIDEでHEXファイルを作成する方法</a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="uart_arduinoライブラリ自作-1"><a class="header" href="#uart_arduinoライブラリ自作-1">UART_Arduinoライブラリ(自作)</a></h1>
+<h3 id="keil-studioのserialctrlのようなライブラリの使用方法α-1"><a class="header" href="#keil-studioのserialctrlのようなライブラリの使用方法α-1">Keil StudioのSerialCtrlのようなライブラリの使用方法+α</a></h3>
+<ol>
+<li><code>UART_Arduinoライブラリ</code>の最新バージョンをダウンロード</li>
+</ol>
+<blockquote>
+<p><code>teams</code>等にある場合が多い。<br />
+または<code>github</code>上にある。<a href="https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino">ここ</a>からダウンロード。</p>
+</blockquote>
+<ol start="2">
+<li>ダウンロードした<code>ヘッダファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Inc</code>に、<code>ソースファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Src</code>に移動。</li>
+<li>使用したいソースファイル内等でヘッダファイルを<code>Include</code>する。</li>
+<li>使用する<code>USART</code>を<code>.iocファイル</code>で設定しコードを生成。</li>
+<li>使用する関数を記述。</li>
+</ol>
+<blockquote>
+<p>中には<code>printf</code>を使用する関数も含まれているため、<code>printf</code>を<code>UART通信</code>で使用できるようにしておく。<a href="./chapter_2.html">参考</a></p>
+</blockquote>
+<ol start="6">
+<li><code>manydef.h</code>はピンを簡単にしたもの。</li>
+</ol>
+<blockquote>
+<p>例<br />
+<code>GPIOA</code>→<code>PA</code>,<code>GPIO_PIN_0</code>→<code>P0</code></p>
+</blockquote>
+<p><strong>使用例</strong>
+<code>main.c</code></p>
+<pre><code class="language-c">// 略
+/* USER CODE BEGIN Includes */
+#include &lt;stdio.h&gt;
+#include "USART_Arduino.h"
+/* USER CODE END Includes */
+// 中略
+    /* USER CODE BEGIN 1 */
+    setbuf(stdout,NULL);
+    /* USER CODE END 1 */
+// 中略
+    /* USER CODE BEGIN 2 */
+    getdata data;
+    /* USER CODE END 2 */
+// 中略
+    /* USER CODE BEGIN WHILE */
+    while (1)
+    {
+    /* USER CODE END WHILE */
+    /* USER CODE BEGIN 3 */
+        if(getData(&amp;huart1,&amp;data) == 0){
+            AllShowP(data);
+        }
+    }
+    /* USER CODE END 3 */
+// 中略
+    /* USER CODE BEGIN 4 */
+    int _write(int file,char *ptr,int len){
+        HAL_UART_Transmit(&amp;huart2, (uint8_t *)ptr, len, 10);
+        return len;
+    }
+    /* USER CODE END 4 */
+// 略
+</code></pre>
+<p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。また、<code>getdata</code>型の<code>data</code>という名前の構造体変数を宣言し、<code>getData関数</code>に引数として<code>data</code>のアドレスを渡している。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">getDataの戻り値(int型)</th><th style="text-align: center">意味</th></tr></thead><tbody>
+<tr><td style="text-align: center">0</td><td style="text-align: center">構造体に値が格納された</td></tr>
+<tr><td style="text-align: center">-1</td><td style="text-align: center">先頭データではない値</td></tr>
+</tbody></table>
+</div>
+<p><code>AllShowP</code>は各アナログ値と押されているボタンを表示する関数。使用例にはないが<code>AllShow</code>は各アナログ値とすべてのボタンの状態を<code>0/1</code>で表示する関数。表示はすべて<code>printf</code>で行われる。</p>
 
                     </main>
 

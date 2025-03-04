@@ -159,7 +159,7 @@
 </ol>
 <blockquote>
 <p><code>teams</code>等にある場合が多い。<br />
-またｈ<code>github</code>上にある。<a href="https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino">ここ</a>からダウンロード。</p>
+または<code>github</code>上にある。<a href="https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino">ここ</a>からダウンロード。</p>
 </blockquote>
 <ol start="2">
 <li>ダウンロードした<code>ヘッダファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Inc</code>に、<code>ソースファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Src</code>に移動。</li>
@@ -174,10 +174,8 @@
 <li><code>manydef.h</code>はピンを簡単にしたもの。</li>
 </ol>
 <blockquote>
-<p>例</p>
-<blockquote>
-<p><code>GPIOA</code>→<code>PA</code>,<code>GPIO_PIN_0</code>→<code>P0</code></p>
-</blockquote>
+<p>例<br />
+<code>GPIOA</code>→<code>PA</code>,<code>GPIO_PIN_0</code>→<code>P0</code></p>
 </blockquote>
 <p><strong>使用例</strong>
 <code>main.c</code></p>
@@ -215,9 +213,9 @@
 // 略
 </code></pre>
 <p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。また、<code>getdata</code>型の<code>data</code>という名前の構造体変数を宣言し、<code>getData関数</code>に引数として<code>data</code>のアドレスを渡している。</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: center">getDataの戻り値(int型)</th><th style="text-align: left">意味</th></tr></thead><tbody>
-<tr><td style="text-align: center">0</td><td style="text-align: left">構造体に値が格納された</td></tr>
-<tr><td style="text-align: center">-1</td><td style="text-align: left">先頭データではない値</td></tr>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">getDataの戻り値(int型)</th><th style="text-align: center">意味</th></tr></thead><tbody>
+<tr><td style="text-align: center">0</td><td style="text-align: center">構造体に値が格納された</td></tr>
+<tr><td style="text-align: center">-1</td><td style="text-align: center">先頭データではない値</td></tr>
 </tbody></table>
 </div>
 <p><code>AllShowP</code>は各アナログ値と押されているボタンを表示する関数。使用例にはないが<code>AllShow</code>は各アナログ値とすべてのボタンの状態を<code>0/1</code>で表示する関数。表示はすべて<code>printf</code>で行われる。</p>
