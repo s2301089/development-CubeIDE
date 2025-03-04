@@ -215,12 +215,13 @@
 // 略
 </code></pre>
 <p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。また、<code>getdata</code>型の<code>data</code>という名前の構造体変数を宣言し、<code>getData関数</code>に引数として<code>data</code>のアドレスを渡している。</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: center"><code>getData</code>の戻り値(<code>int</code>型)</th><th style="text-align: left">意味</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">getDataの戻り値(int型)</th><th style="text-align: left">意味</th></tr></thead><tbody>
 <tr><td style="text-align: center">0</td><td style="text-align: left">構造体に値が格納された</td></tr>
 <tr><td style="text-align: center">-1</td><td style="text-align: left">先頭データではない値</td></tr>
-<tr><td style="text-align: center"><code>AllShowP</code>は各アナログ値と押されているボタンを表示する関数。使用例にはないが<code>AllShow</code>は各アナログ値とすべてのボタンの状態を<code>0/1</code>で表示する関数。表示はすべて<code>printf</code>で行われる。</td><td style="text-align: left"></td></tr>
 </tbody></table>
 </div>
+<p><code>AllShowP</code>は各アナログ値と押されているボタンを表示する関数。使用例にはないが<code>AllShow</code>は各アナログ値とすべてのボタンの状態を<code>0/1</code>で表示する関数。表示はすべて<code>printf</code>で行われる。</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
