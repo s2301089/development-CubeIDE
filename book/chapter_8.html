@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>UART通信(受信) - development-CubeIDE</title>
+        <title>UART_Arduinoライブラリ(自作) - development-CubeIDE</title>
 
 
         <!-- Custom HTML head -->
@@ -152,42 +152,84 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="uart通信受信"><a class="header" href="#uart通信受信">UART通信(受信)</a></h1>
-<h3 id="arduinoなどからのデータをuartを使用して受け取る"><a class="header" href="#arduinoなどからのデータをuartを使用して受け取る">ArduinoなどからのデータをUARTを使用して受け取る</a></h3>
-<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Connectivity</code>-<code>USART1</code>-<code>Mode</code>を<code>Asynchronous</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Basic Parameters</code>-<code>Baud Rate</code>を<code>38400</code>に設定。今回は<code>USART1</code>を使用した。<br />
-保存しコードを作成。<code>main.c</code>に処理を追記。</p>
-<pre><code class="language-c">/* USER CODE BEGIN 2 */
-char getdata;
-/* USER CODE END 2 */
-
-/* Infinite loop */
-/* USER CODE BEGIN WHILE */
-while (1)
-{
-/* USER CODE END WHILE */
-
-/* USER CODE BEGIN 3 */
-    if(HAL_UART_Receive(&amp;huart1, &amp;getdata, 1, 10) == HAL_OK){
-        printf("%x\r\n",getdata);
+                        <h1 id="uart_arduinoライブラリ自作"><a class="header" href="#uart_arduinoライブラリ自作">UART_Arduinoライブラリ(自作)</a></h1>
+<h3 id="keil-studioのserialctrlのようなライブラリの使用方法α"><a class="header" href="#keil-studioのserialctrlのようなライブラリの使用方法α">Keil StudioのSerialCtrlのようなライブラリの使用方法+α</a></h3>
+<ol>
+<li><code>UART_Arduinoライブラリ</code>の最新バージョンをダウンロード</li>
+</ol>
+<blockquote>
+<p><code>teams</code>等にある場合が多い。<br />
+またｈ<code>github</code>上にある。<a href="https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino">ここ</a>からダウンロード。</p>
+</blockquote>
+<ol start="2">
+<li>ダウンロードした<code>ヘッダファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Inc</code>に、<code>ソースファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Src</code>に移動。</li>
+<li>使用したいソースファイル内等でヘッダファイルを<code>Include</code>する。</li>
+<li>使用する<code>USART</code>を<code>.iocファイル</code>で設定しコードを生成。</li>
+<li>使用する関数を記述。</li>
+</ol>
+<blockquote>
+<p>中には<code>printf</code>を使用する関数も含まれているため、<code>printf</code>を<code>UART通信</code>で使用できるようにしておく。<a href="./chapter_2.html">参考</a></p>
+</blockquote>
+<ol start="6">
+<li><code>manydef.h</code>はピンを簡単にしたもの。</li>
+</ol>
+<blockquote>
+<p>例</p>
+<blockquote>
+<p><code>GPIOA</code>→<code>PA</code>,<code>GPIO_PIN_0</code>→<code>P0</code></p>
+</blockquote>
+</blockquote>
+<p><strong>使用例</strong>
+<code>main.c</code></p>
+<pre><code class="language-c">// 略
+/* USER CODE BEGIN Includes */
+#include &lt;stdio.h&gt;
+#include "USART_Arduino.h"
+/* USER CODE END Includes */
+// 中略
+    /* USER CODE BEGIN 1 */
+    setbuf(stdout,NULL);
+    /* USER CODE END 1 */
+// 中略
+    /* USER CODE BEGIN 2 */
+    getdata data;
+    /* USER CODE END 2 */
+// 中略
+    /* USER CODE BEGIN WHILE */
+    while (1)
+    {
+    /* USER CODE END WHILE */
+    /* USER CODE BEGIN 3 */
+        if(getData(&amp;huart1,&amp;data) == 0){
+            AllShowP(data);
+        }
     }
-}
-/* USER CODE END 3 */
+    /* USER CODE END 3 */
+// 中略
+    /* USER CODE BEGIN 4 */
+    int _write(int file,char *ptr,int len){
+        HAL_UART_Transmit(&amp;huart2, (uint8_t *)ptr, len, 10);
+        return len;
+    }
+    /* USER CODE END 4 */
+// 略
 </code></pre>
-<p>受け取ったデータを<code>printf</code>する。たとえば<code>Arduino</code>側でスイッチの値を送るとしたら<code>TeraTerm</code>の画面にはそのスイッチの値が表示されるだろう。</p>
-<h4 id="参考"><a class="header" href="#参考">参考</a></h4>
-<ul>
-<li><a href="https://qiita.com/usashirou/items/5a2c9e4fd35c261c4f3a">STM32CubeIDEを使ってみよう　How To STM32CubeIDE 日本語版　(6) 　UARTを使ってみよう(2)</a></li>
-</ul>
-
+<p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。また、<code>getdata</code>型の<code>data</code>という名前の構造体変数を宣言し、<code>getData関数</code>に引数として<code>data</code>のアドレスを渡している。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center"><code>getData</code>の戻り値(<code>int</code>型)</th><th style="text-align: left">意味</th></tr></thead><tbody>
+<tr><td style="text-align: center">0</td><td style="text-align: left">構造体に値が格納された</td></tr>
+<tr><td style="text-align: center">-1</td><td style="text-align: left">先頭データではない値</td></tr>
+<tr><td style="text-align: center"><code>AllShowP</code>は各アナログ値と押されているボタンを表示する関数。使用例にはないが<code>AllShow</code>は各アナログ値とすべてのボタンの状態を<code>0/1</code>で表示する関数。表示はすべて<code>printf</code>で行われる。</td><td style="text-align: left"></td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="chapter_5.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="chapter_6.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="chapter_8.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="chapter_7.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -197,11 +239,11 @@ while (1)
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="chapter_5.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="chapter_6.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="chapter_8.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="chapter_7.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
