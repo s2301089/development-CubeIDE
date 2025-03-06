@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>TeraTermにprintf出力 - development-CubeIDE</title>
+        <title>TeraTermにprintf出力(lib) - development-CubeIDE</title>
 
 
         <!-- Custom HTML head -->
@@ -152,49 +152,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="teratermにprintf出力"><a class="header" href="#teratermにprintf出力">TeraTermにprintf出力</a></h1>
-<h3 id="printfを使って変数の値などを見れるようにする"><a class="header" href="#printfを使って変数の値などを見れるようにする">printfを使って変数の値などを見れるようにする</a></h3>
-<p>マイコンとPCとの間でUARTを用いて通信を行う。</p>
-<h3 id="cubeideの設定"><a class="header" href="#cubeideの設定">CubeIDEの設定</a></h3>
-<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Connectivity</code>-<code>USART2</code>-<code>Mode</code>を<code>Asynchronous</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Basic Parameters</code>-<code>Baud Rate</code>を<code>38400</code>に設定。今回は<code>USART2</code>を使用した。<br />
-保存しコードを作成。<code>main.c</code>に処理を追記。</p>
-<pre><code class="language-c">/* USER CODE BEGIN Includes */
-#include &lt;stdio.h&gt;
-/* USER CODE END Includes */
-
-/* USER CODE BEGIN 1 */
-setbuf(stdout,NULL);
-/* USER CODE END 1 */
-
-/* USER CODE BEGIN 3 */
-    printf("Hello World\r\n");
-    HAL_Delay(250);
-}
-/* USER CODE END 3 */
-
-/* USER CODE BEGIN 4 */
-int _write(int file,char *ptr,int len){
-	HAL_UART_Transmit(&amp;huart2, (uint8_t *)ptr, len, 10);
-	return len;
-}
-/* USER CODE END 4 */
-</code></pre>
-<h3 id="teratermの設定"><a class="header" href="#teratermの設定">TeraTermの設定</a></h3>
-<p><code>TeraTerm</code>を開いて<code>ファイル</code>-<code>新しい接続</code>-<code>シリアル</code>-<code>COM◯: STMicroelectronics STLink Virtual COM Port (COM◯)</code>-<code>OK</code>でマイコンと接続する。<code>設定</code>-<code>シリアルポート</code>-<code>スピード</code>を<code>CubeIDE</code>側で設定した<code>Baud Rate</code>を入力。ここでは<code>38400</code>と設定。<code>現在の接続を再設定</code>で設定を完了させる。</p>
-<h4 id="参考"><a class="header" href="#参考">参考</a></h4>
-<ul>
-<li><a href="https://yukblog.net/stm32cubeide-printf-uart/">【便利】STM32CubeIDEでprintf【UART編】</a></li>
-</ul>
+                        <h1 id="teratermにprintf出力lib"><a class="header" href="#teratermにprintf出力lib">TeraTermにprintf出力(lib)</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="chapter_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="chapter_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="chapter_9.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="chapter_10.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -204,11 +172,11 @@ int _write(int file,char *ptr,int len){
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="chapter_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="chapter_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="chapter_9.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="chapter_10.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

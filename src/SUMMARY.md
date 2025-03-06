@@ -3,6 +3,8 @@
 
 # 基本設定
 - [TeraTermにprintf出力](./chapter_2.md)
+- [TeraTermにprintf出力(lib)](./chapter_9.md)
+- [ピンの名前を楽する(lib)](./chapter_10.md)
 
 # 入出力
 - [ディジタル入出力](./chapter_3.md)
@@ -11,7 +13,7 @@
 
 # 通信
 - [UART通信(受信)](./chapter_6.md)
-- [Arduinoとの通信](./chapter_8.md)
+- [Arduinoとの通信(lib)](./chapter_8.md)
 
 # 共有
 - [binファイルの生成](./chapter_7.md)
