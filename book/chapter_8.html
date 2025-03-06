@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>UART_Arduinoライブラリ(自作) - development-CubeIDE</title>
+        <title>Arduinoとの通信 - development-CubeIDE</title>
 
 
         <!-- Custom HTML head -->
@@ -152,10 +152,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="uart_arduinoライブラリ自作"><a class="header" href="#uart_arduinoライブラリ自作">UART_Arduinoライブラリ(自作)</a></h1>
-<h3 id="keil-studioのserialctrlのようなライブラリの使用方法α"><a class="header" href="#keil-studioのserialctrlのようなライブラリの使用方法α">Keil StudioのSerialCtrlのようなライブラリの使用方法+α</a></h3>
+                        <h1 id="arduinoとの通信"><a class="header" href="#arduinoとの通信">Arduinoとの通信</a></h1>
+<h3 id="keil-studioのserialctrlのようなライブラリの使用方法"><a class="header" href="#keil-studioのserialctrlのようなライブラリの使用方法">Keil StudioのSerialCtrlのようなライブラリの使用方法</a></h3>
 <ol>
-<li><code>UART_Arduinoライブラリ</code>の最新バージョンをダウンロード</li>
+<li><code>UART_Arduinoライブラリ</code>の最新バージョンをダウンロード。</li>
 </ol>
 <blockquote>
 <p><code>teams</code>等にある場合が多い。<br />
@@ -165,21 +165,18 @@
 <li>ダウンロードした<code>ヘッダファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Inc</code>に、<code>ソースファイル</code>を<code>プロジェクト</code>-<code>Core</code>-<code>Src</code>に移動。</li>
 <li>使用したいソースファイル内等でヘッダファイルを<code>Include</code>する。</li>
 <li>使用する<code>USART</code>を<code>.iocファイル</code>で設定しコードを生成。</li>
+</ol>
+<blockquote>
+<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Connectivity</code>-<code>USART1</code>-<code>Mode</code>を<code>Asynchronous</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Basic Parameters</code>-<code>Baud Rate</code>を<code>38400</code>に設定。今回は<code>USART1</code>を使用した。</p>
+</blockquote>
+<ol start="5">
 <li>使用する関数を記述。</li>
 </ol>
 <blockquote>
 <p>中には<code>printf</code>を使用する関数も含まれているため、<code>printf</code>を<code>UART通信</code>で使用できるようにしておく。<a href="./chapter_2.html">参考</a></p>
 </blockquote>
-<ol start="6">
-<li><code>manydef.h</code>はピンを簡単にしたもの。</li>
-</ol>
-<blockquote>
-<p>例<br />
-<code>GPIOA</code>→<code>PA</code>,<code>GPIO_PIN_0</code>→<code>P0</code></p>
-</blockquote>
-<p><strong>使用例</strong>
-<code>main.c</code></p>
-<pre><code class="language-c">// 略
+<p><strong>使用例1</strong></p>
+<pre><code class="language-c:main.c">// 略
 /* USER CODE BEGIN Includes */
 #include &lt;stdio.h&gt;
 #include "USART_Arduino.h"
@@ -190,7 +187,7 @@
     /* USER CODE END 1 */
 // 中略
     /* USER CODE BEGIN 2 */
-    getdata data;
+    getdata DATA;
     /* USER CODE END 2 */
 // 中略
     /* USER CODE BEGIN WHILE */
@@ -198,8 +195,8 @@
     {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-        if(getData(&amp;huart1,&amp;data) == 0){
-            AllShowP(data);
+        if(getData(&amp;huart1,&amp;DATA) == 0){
+            AllShowP(DATA);
         }
     }
     /* USER CODE END 3 */
@@ -212,13 +209,134 @@
     /* USER CODE END 4 */
 // 略
 </code></pre>
-<p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。また、<code>getdata</code>型の<code>data</code>という名前の構造体変数を宣言し、<code>getData関数</code>に引数として<code>data</code>のアドレスを渡している。</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: center">getDataの戻り値(int型)</th><th style="text-align: center">意味</th></tr></thead><tbody>
-<tr><td style="text-align: center">0</td><td style="text-align: center">構造体に値が格納された</td></tr>
-<tr><td style="text-align: center">-1</td><td style="text-align: center">先頭データではない値</td></tr>
-</tbody></table>
-</div>
-<p><code>AllShowP</code>は各アナログ値と押されているボタンを表示する関数。使用例にはないが<code>AllShow</code>は各アナログ値とすべてのボタンの状態を<code>0/1</code>で表示する関数。表示はすべて<code>printf</code>で行われる。</p>
+<p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。また、<code>getdata</code>型の<code>DATA</code>という名前の構造体変数を宣言し、<code>getData関数</code>に引数として<code>DATA</code>のアドレスを渡している。</p>
+<p><strong>使用例2</strong><br />
+<code>main.c</code></p>
+<pre><code class="language-c">// 略
+/* USER CODE BEGIN Includes */
+#include &lt;stdio.h&gt;
+#include "USART_Arduino.h"
+#include "STprintf.h"
+#include "manydef.h"
+/* USER CODE END Includes */
+// 略
+    /* USER CODE BEGIN 2 */
+    STprintf(&amp;huart2);
+    unsigned int FAFcount = 0;
+    /* USER CODE END 2 */
+// 略
+    /* USER CODE BEGIN WHILE */
+    while (1)
+    {
+        HAL_TIM_PWM_Start(&amp;htim3,TIMCH_3);
+        /* USER CODE END WHILE */
+
+        /* USER CODE BEGIN 3 */
+        getDataIT(&amp;huart1);
+        printf("%d %d \r\n",FAF,FAFcount);
+        if(FAF == 1){
+            FAFcount = 0;
+            AllShow(data);
+            __HAL_TIM_SET_COMPARE(&amp;htim3,TIMCH_3,data.LY);
+            HAL_GPIO_WritePin(GPIOxA, GPIO_Pin_0, 0);
+        }else{
+            FAFcount++;
+            if(FAFcount &gt;= TIMEOUT_MAX * 10){
+                __HAL_TIM_SET_COMPARE(&amp;htim3,TIMCH_3,0);
+                HAL_GPIO_WritePin(GPIOxA, GPIO_Pin_0, 0);
+                FAFcount = 0;
+                printf("main timeout ");
+                HAL_Delay(500);
+            }
+        }
+    }
+    /* USER CODE END 3 */
+// 略
+</code></pre>
+<p>上記の使用例では、<code>printf</code>を<code>USART2</code>で使用できるようにし、<code>Arduino</code>との<code>UART通信</code>に<code>USART1</code>を使用している。あらかじめライブラリ内で宣言されている構造体<code>data</code>の<code>LY</code>の値に合わせて<code>LED</code>が点灯する。FAFとはデータを受信したかどうか記録するフラグ(変数)であり、フラグに合わせてタイムアウトの処理を行っている。タイムアウトの時間や回数などは他の処理の量によって変更した。</p>
+<h4 id="各関数に関して"><a class="header" href="#各関数に関して">各関数に関して</a></h4>
+<ul>
+<li>getData関数
+<ul>
+<li>引数に<code>UART_HandleTypeDef*</code>と<code>getdata*</code>をもつ。使用する<code>USART</code>の構造体変数のポインタ<code>UART_HandleTypeDef*</code>と受信したデータを入れる構造体変数のポインタ<code>getdata*</code>を渡す。</li>
+<li><code>getData(&amp;huart1,DATA);</code></li>
+<li>戻り値は、先頭データが<code>0xaf</code>であり、構造体に受信データが代入された場合は<code>0</code>、先頭データが<code>0xaf</code>でない場合は<code>-1</code>が返される。</li>
+<li>受信にはポーリング方式を使用し、データを受信する関数。</li>
+</ul>
+</li>
+<li>getDataIT関数
+<ul>
+<li>引数に<code>UART_HandleTypeDef*</code>をもつ。使用する<code>USART</code>の構造体変数のポインタ<code>UART_HandleTypeDef*</code>を渡す。</li>
+<li><code>getDataIT(&amp;huart1);</code></li>
+<li>戻り値はなく、受信には割り込み使用し、データを受信する関数。</li>
+</ul>
+</li>
+<li>AllShow関数
+<ul>
+<li>引数に<code>getdata</code>をもつ。構造体変数<code>getdata</code>を渡す。</li>
+<li><code>AllShow(data);</code></li>
+<li>戻り値はなく、構造体の中身を表示する関数。表示形式はアナログ値をもつスティックなどは整数3桁(空白埋め)で、ディジタル値をもつボタンなどは<code>0/1</code>で表示する。</li>
+<li><code>printf</code>関数を使用するため、<code>printf</code>を使用するためのコードが必要になる。<a href="./chapter_2.html">参考</a></li>
+</ul>
+</li>
+<li>AllShowP関数
+<ul>
+<li>引数や戻り値は<code>AllShow</code>関数と同じである。</li>
+<li>表示形式はスティックなどは<code>AllShow</code>関数と同じだが、ボタンなどは<code>AllShow</code>関数と異なり、押されているボタンを名前で表示する。送信側の<code>Arduino</code>のシリアルモニタと同じように表示される。</li>
+</ul>
+</li>
+</ul>
+<h4 id="内部で使用される各関数に関して"><a class="header" href="#内部で使用される各関数に関して">内部で使用される各関数に関して</a></h4>
+<ul>
+<li>RevAF関数
+<ul>
+<li>引数に<code>UART_HandleTypeDef*</code>をもつ。使用する<code>USART</code>の構造体変数のポインタ<code>UART_HandleTypeDef*</code>を渡す。</li>
+<li><code>RevAF(huart);</code></li>
+<li>戻り値は、受信したデータが先頭データ<code>0xaf</code>の場合は<code>0xaf</code>、そうでない場合は<code>0x00</code>を、そもそも受信していない場合は<code>0xff</code>を返す。</li>
+<li>ポーリング方式の際に使用される関数。</li>
+</ul>
+</li>
+<li>AddArray関数
+<ul>
+<li>引数に<code>UART_HandleTypeDef*</code>と<code>uint8_t*</code>をもつ。使用する<code>USART</code>の構造体変数のポインタ<code>UART_HandleTypeDef*</code>と受信したデータを入れる配列のポインタ<code>uint8_t*</code>を渡す。</li>
+<li><code>AddArray(huart,Rdata);</code></li>
+<li>戻り値はなく、受信データの総数になるまで受信したデータを配列に順番に代入する。</li>
+<li>ポーリング方式の際に使用される関数。</li>
+</ul>
+</li>
+<li>HAL_UART_RxCpltCallback関数
+<ul>
+<li>引数に<code>UART_HandleTypeDef*</code>をもつ。この関数は受信割り込みでデータを受信した時に自動的に実行される。</li>
+<li>戻り値はなく、<code>FAF</code>を揚げデータを受信したことを表す。また、<code>getData</code>関数の内部処理のようなことを行う。</li>
+<li>割り込みを使用した際に使用される関数。</li>
+</ul>
+</li>
+<li>ChSUM関数
+<ul>
+<li>引数に<code>uint8_t*</code>をもつ。受信したデータが入った配列のポインタ<code>uint8_t*</code>を渡す。</li>
+<li>配列の最後のデータが終端データ<code>0xed</code>であるか確認し、終端データである場合、チェックサムを行う。</li>
+<li>チェックサムとは、各スティックと各ボタンのデータの総和が送信側で計算された総和と一致しているか確認すること。送信側の計算結果も受信データに含まれている。</li>
+<li>戻り値は、総和が一致している場合は<code>0xed</code>、そうでない場合は<code>0x00</code>、配列の最後のデータが正しくない場合は<code>0xff</code>を返す。</li>
+<li>ポーリング方式と割り込みを使用した際のどちらでも使用される関数。</li>
+</ul>
+</li>
+<li>AddStruct関数
+<ul>
+<li>引数に<code>getdata*</code>と<code>uint8_t*</code>をもち、データを格納する構造体変数のポインタ<code>getdata*</code>と受信データが入ってる配列のポインタ<code>uint8_t*</code>を渡す。</li>
+<li><code>AddStruct(&amp;data,AIdata);</code></li>
+<li>配列の値から構造体の各要素にデータを代入する。</li>
+<li>戻り値はなく、ポーリング方式と割り込みを使用した際のどちらでも使用される関数。</li>
+</ul>
+</li>
+<li>StructInit関数
+<ul>
+<li>引数に<code>getdata*</code>をもつ。データを格納する構造体変数のポインタ<code>getdata*</code>を渡す。</li>
+<li><code>StructInit(&amp;data);</code></li>
+<li>構造体の各要素を初期化する。<code>LX</code>,<code>LY</code>,<code>RX</code>,<code>RY</code>スティックは<code>0x80</code>に、<code>L2</code>,<code>R2</code>スティックは<code>0x00</code>に、各ボタンは<code>0</code>に初期化される。</li>
+<li>戻り値はなく、ポーリング方式と割り込みを使用した際のどちらでも使用される関数。</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
