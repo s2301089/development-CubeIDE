@@ -1,7 +1,7 @@
 # PWM出力
 
 ### LEDの明るさを変更したり、モーターの回転速度を変更したりする
-`[プロジェクト名].ioc`-`Pinout & Configuration`-`Timers`-`TIM3`-`Mode`-`Channel3`を`PWM Generation CH3`、`Configuration`-`Parameter Settings`-`Counter Settings`-`Prescaler`を`83`、`Counter Period`を`999`、`PWM Generation Channel3`-`Output compare preload`を`Disable`に設定。今回は`TIM3`を使用した。  
+`[プロジェクト名].ioc`-`Pinout & Configuration`-`Timers`-`TIM3`-`Mode`-`Channel3`を`PWM Generation CH3`、`Configuration`-`Parameter Settings`-`Counter Settings`-`Prescaler`を~~`83`~~`4`、`Counter Period`を~~`999`~~`255`、`PWM Generation Channel3`-`Output compare preload`を`Disable`に設定。今回は`TIM3`を使用した。  
 保存しコードを作成。`main.c`に処理を追記。  
 ```c
 /* USER CODE BEGIN WHILE */

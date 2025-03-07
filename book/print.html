@@ -218,7 +218,7 @@ int psw1;
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pwm出力"><a class="header" href="#pwm出力">PWM出力</a></h1>
 <h3 id="ledの明るさを変更したりモーターの回転速度を変更したりする"><a class="header" href="#ledの明るさを変更したりモーターの回転速度を変更したりする">LEDの明るさを変更したり、モーターの回転速度を変更したりする</a></h3>
-<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Timers</code>-<code>TIM3</code>-<code>Mode</code>-<code>Channel3</code>を<code>PWM Generation CH3</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Counter Settings</code>-<code>Prescaler</code>を<code>83</code>、<code>Counter Period</code>を<code>999</code>、<code>PWM Generation Channel3</code>-<code>Output compare preload</code>を<code>Disable</code>に設定。今回は<code>TIM3</code>を使用した。<br />
+<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Timers</code>-<code>TIM3</code>-<code>Mode</code>-<code>Channel3</code>を<code>PWM Generation CH3</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Counter Settings</code>-<code>Prescaler</code>を<del><code>83</code></del><code>4</code>、<code>Counter Period</code>を<del><code>999</code></del><code>255</code>、<code>PWM Generation Channel3</code>-<code>Output compare preload</code>を<code>Disable</code>に設定。今回は<code>TIM3</code>を使用した。<br />
 保存しコードを作成。<code>main.c</code>に処理を追記。</p>
 <pre><code class="language-c">/* USER CODE BEGIN WHILE */
 while (1)
