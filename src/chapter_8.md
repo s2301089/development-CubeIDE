@@ -3,7 +3,7 @@
 ### Keil StudioのSerialCtrlのようなライブラリの使用方法
 1. `UART_Arduinoライブラリ`の最新バージョンをダウンロード。  
 > `teams`等にある場合が多い。  
-> または`github`上にある。**[ここ](https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino)**からダウンロード。  
+> または`github`上にある。[ここ](https://github.com/s2301089/development-F446RE/tree/main/UART_Arduino)からダウンロード。  
 2. ダウンロードした`ヘッダファイル`を`プロジェクト`-`Core`-`Inc`に、`ソースファイル`を`プロジェクト`-`Core`-`Src`に移動。  
 3. 使用したいソースファイル内等でヘッダファイルを`Include`する。  
 4. 使用する`USART`を`.iocファイル`で設定しコードを生成。  
