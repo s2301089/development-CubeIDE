@@ -7,4 +7,7 @@
 * STM32CubeIDE 1.16.0
 * NUCLEO-F446RE (たまにNUCLEO-F303K8)
 
-事前準備としては[この](https://qiita.com/usashirou/items/65be086c28f7a6feac7d)サイトを参考にした。
+事前準備としては[この](https://qiita.com/usashirou/items/65be086c28f7a6feac7d)サイトを参考にした。  
+
+### 制御Home
+[Control General](https://s2301089.github.io/Control_General/book/)  
