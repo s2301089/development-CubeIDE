@@ -4,7 +4,7 @@
 # 基本設定
 - [TeraTermにprintf出力](./chapter_2.md)
 - [TeraTermにprintf出力(lib)](./chapter_9.md)
-- [ピンの名前を楽する(lib)](./chapter_10.md)
+- [名前を楽する(lib)](./chapter_10.md)
 
 # 入出力
 - [ディジタル入出力](./chapter_3.md)

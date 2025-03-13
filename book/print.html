@@ -196,8 +196,53 @@ int _write(int file,char *ptr,int len){
 <li><a href="https://yukblog.net/stm32cubeide-printf-uart/">【便利】STM32CubeIDEでprintf【UART編】</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="teratermにprintf出力lib"><a class="header" href="#teratermにprintf出力lib">TeraTermにprintf出力(lib)</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ピンの名前を楽するlib"><a class="header" href="#ピンの名前を楽するlib">ピンの名前を楽する(lib)</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ディジタル入出力"><a class="header" href="#ディジタル入出力">ディジタル入出力</a></h1>
+<p><a href="./chapter_2.html">TeraTermにprintf出力</a>で<code>printf</code>する方法を紹介したがいちいち<code>int _write</code>とか書くのがめんどくさくなったので処理をまとめた。</p>
+<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Connectivity</code>-<code>USART2</code>-<code>Mode</code>を<code>Asynchronous</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Basic Parameters</code>-<code>Baud Rate</code>を<code>38400</code>に設定。今回は<code>USART2</code>を使用した。<br />
+保存しコードを作成。<code>main.c</code>に処理を追記。</p>
+<pre><code class="language-c">/* USER CODE BEGIN Includes */
+#include &lt;stdio.h&gt;
+#include "STprintf.h"
+/* USER CODE END Includes */
+
+/* USER CODE BEGIN 2 */
+STprintf(&amp;huart2);
+uint8_t Out[8] = {0};
+/* USER CODE END 2 */
+
+/* USER CODE BEGIN 3 */
+    printf("Hello World\r\n");
+    HAL_Delay(250);
+}
+/* USER CODE END 3 */
+
+</code></pre>
+<p><code>STprintf</code>関数の引数にUARTのポインタを渡すだけで<code>printf</code>が使えるようになる。</p>
+<h3 id="teratermの設定-1"><a class="header" href="#teratermの設定-1">TeraTermの設定</a></h3>
+<p><code>TeraTerm</code>を開いて<code>ファイル</code>-<code>新しい接続</code>-<code>シリアル</code>-<code>COM◯: STMicroelectronics STLink Virtual COM Port (COM◯)</code>-<code>OK</code>でマイコンと接続する。<code>設定</code>-<code>シリアルポート</code>-<code>スピード</code>を<code>CubeIDE</code>側で設定した<code>Baud Rate</code>を入力。ここでは<code>38400</code>と設定。<code>現在の接続を再設定</code>で設定を完了させる。</p>
+<h4 id="参考-1"><a class="header" href="#参考-1">参考</a></h4>
+<ul>
+<li><a href="./chapter_2.html">TeraTermでprintf出力</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="名前を楽するlib"><a class="header" href="#名前を楽するlib">名前を楽する(lib)</a></h1>
+<p><code>GPIOA</code>とか<code>GPIO_PIN_1</code>とか<code>TIM_Channel_3</code>とか書くのがめんどくなったので楽にした。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">もともと</th><th style="text-align: center">いま</th></tr></thead><tbody>
+<tr><td style="text-align: center">GPIO_PIN_0</td><td style="text-align: center">P0</td></tr>
+<tr><td style="text-align: center">中略</td><td style="text-align: center">中略</td></tr>
+<tr><td style="text-align: center">GPIO_PIN_15</td><td style="text-align: center">P15</td></tr>
+<tr><td style="text-align: center">GPIO_PIN_ALL</td><td style="text-align: center">Pall</td></tr>
+<tr><td style="text-align: center">GPIO_PIN_0</td><td style="text-align: center">GPIO_Pin_0</td></tr>
+<tr><td style="text-align: center">中略</td><td style="text-align: center">中略</td></tr>
+<tr><td style="text-align: center">GPIO_PIN_15</td><td style="text-align: center">GPIO_Pin_15</td></tr>
+<tr><td style="text-align: center">GPIO_PIN_ALL</td><td style="text-align: center">GPIO_Pin_ALL</td></tr>
+<tr><td style="text-align: center">GPIOA</td><td style="text-align: center">PA</td></tr>
+<tr><td style="text-align: center">中略</td><td style="text-align: center">中略</td></tr>
+<tr><td style="text-align: center">GPIOH</td><td style="text-align: center">PH</td></tr>
+<tr><td style="text-align: center">TIM_CHANNEL_1</td><td style="text-align: center">TIMCH_1</td></tr>
+<tr><td style="text-align: center">中略</td><td style="text-align: center">中略</td></tr>
+<tr><td style="text-align: center">TIM_CHANNEL_4</td><td style="text-align: center">TIMCH_4</td></tr>
+<tr><td style="text-align: center">TIM_CHANNWL_ALL</td><td style="text-align: center">TIMCH_ALL</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="ディジタル入出力"><a class="header" href="#ディジタル入出力">ディジタル入出力</a></h1>
 <h3 id="ledを点灯させたりプッシュスイッチの値を読み込んだりする"><a class="header" href="#ledを点灯させたりプッシュスイッチの値を読み込んだりする">LEDを点灯させたり、プッシュスイッチの値を読み込んだりする</a></h3>
 <p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Pinout view</code>から使いたいピンを選択する。今回は<code>PA_1</code>を<code>GPIO_Input</code>、<code>PA_0</code>を<code>GPIO_Output</code>に設定した。ピンを選ぶときには使用するマイコンボードのMbedのページ(ここでは<a href="https://os.mbed.com/platforms/ST-Nucleo-F446RE/">NUCLEO-F446RE</a>)の<code>Morpho headers</code>を見ながら選ぶといいかもしれない。<br />
 保存しコードを作成。<code>main.c</code>に処理を追記。</p>
@@ -212,7 +257,7 @@ int psw1;
 /* USER CODE END 3 */
 </code></pre>
 <p>使用する回路によって動作は異なるがプルアップ抵抗を用いたプッシュスイッチの回路であれば、スイッチを押すとLEDは消灯し、離すとLEDは点灯するだろう。</p>
-<h4 id="参考-1"><a class="header" href="#参考-1">参考</a></h4>
+<h4 id="参考-2"><a class="header" href="#参考-2">参考</a></h4>
 <ul>
 <li><a href="https://qiita.com/usashirou/items/30e522589db9f7dc8fe4">STM32CubeIDEを使ってみよう　How To STM32CubeIDE 日本語版　(4) スイッチを使ってみよう</a></li>
 </ul>
@@ -232,7 +277,7 @@ while (1)
 /* USER CODE END 3 */
 </code></pre>
 <p><code>100</code>がパルス幅にあたる部分であり、範囲は<code>0</code>~<code>255</code>にする。</p>
-<h4 id="参考-2"><a class="header" href="#参考-2">参考</a></h4>
+<h4 id="参考-3"><a class="header" href="#参考-3">参考</a></h4>
 <ul>
 <li><a href="https://moons.link/post-632/">STM32 HALを使ってPWM出力してみる</a></li>
 </ul>
@@ -260,7 +305,7 @@ while (1)
 </code></pre>
 <p><code>float</code>型を<code>printf</code>するために、設定を変更する。<code>[プロジェクト名]</code>を右クリック、<code>プロパティ</code>-<code>C/C++ ビルド</code>-<code>設定</code>-<code>ツール設定</code>-<code>MCU/MPU Settings</code>の<code>Use float with printf from newlib-nano</code>の項目にチェックを入れ、適用して閉じる。<br />
 今回は可変抵抗を用いてアナログ入力値の変化を出力した。<code>printf</code>を使えるようにするためには、他の設定やコードが必要。<a href="./chapter_2.html">これ</a>を参考にした。</p>
-<h4 id="参考-3"><a class="header" href="#参考-3">参考</a></h4>
+<h4 id="参考-4"><a class="header" href="#参考-4">参考</a></h4>
 <ul>
 <li><a href="https://qiita.com/usashirou/items/e6b5d0529524a140ebaf">STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (12) ADCを使ってみよう</a></li>
 <li><a href="https://yukblog.net/stm32cubeide-printf-float/">STM32CubeIDEのprintfでfloatが使えない件の対処方法</a></li>
@@ -287,7 +332,7 @@ while (1)
 /* USER CODE END 3 */
 </code></pre>
 <p>受け取ったデータを<code>printf</code>する。たとえば<code>Arduino</code>側でスイッチの値を送るとしたら<code>TeraTerm</code>の画面にはそのスイッチの値が表示されるだろう。</p>
-<h4 id="参考-4"><a class="header" href="#参考-4">参考</a></h4>
+<h4 id="参考-5"><a class="header" href="#参考-5">参考</a></h4>
 <ul>
 <li><a href="https://qiita.com/usashirou/items/5a2c9e4fd35c261c4f3a">STM32CubeIDEを使ってみよう　How To STM32CubeIDE 日本語版　(6) 　UARTを使ってみよう(2)</a></li>
 </ul>
@@ -483,7 +528,7 @@ while (1)
 <code>[プロジェクト名]</code>を右クリック、<code>プロパティ</code>-<code>C/C++ ビルド</code>-<code>設定</code>-<code>ツール設定</code>-<code>MCU/MPU Post build outputs</code>の<code>Convert to binary file</code>の項目にチェックを入れ、適用して閉じる。
 <code>binファイル</code>の他にも<code>HEXファイル</code>や<code>SRECファイル</code>などの他のファイル形式のファイルも設定すれば、生成できる。<br />
 <code>binファイル</code>は生成されるとプロジェクトの中の<code>Debugフォルダ</code>に<code>[プロジェクト名].bin</code>という名前で生成される。</p>
-<h4 id="参考-5"><a class="header" href="#参考-5">参考</a></h4>
+<h4 id="参考-6"><a class="header" href="#参考-6">参考</a></h4>
 <ul>
 <li><a href="https://yukblog.net/stm32cubeide-hex/">STM32CubeIDEでHEXファイルを作成する方法</a></li>
 </ul>
