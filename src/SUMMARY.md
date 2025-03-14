@@ -8,9 +8,10 @@
 
 # 入出力
 - [ディジタル入出力](./chapter_3.md)
+- [タイマー割り込みによるLチカ](./chapter_12.md)
 - [PWM出力](./chapter_4.md)
 - [アナログ入力](./chapter_5.md)
-- [ロータリーエンコーダーを読む](./chapter_11.md)
+- [ロータリーエンコーダを読む](./chapter_11.md)
 
 # 通信
 - [UART通信(受信)](./chapter_6.md)

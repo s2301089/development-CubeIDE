@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ディジタル入出力 - development-CubeIDE</title>
+        <title>タイマー割り込みによるLチカ - development-CubeIDE</title>
 
 
         <!-- Custom HTML head -->
@@ -152,35 +152,48 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ディジタル入出力"><a class="header" href="#ディジタル入出力">ディジタル入出力</a></h1>
-<h3 id="ledを点灯させたりプッシュスイッチの値を読み込んだりする"><a class="header" href="#ledを点灯させたりプッシュスイッチの値を読み込んだりする">LEDを点灯させたり、プッシュスイッチの値を読み込んだりする</a></h3>
-<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Pinout view</code>から使いたいピンを選択する。今回は<code>PA_1</code>を<code>GPIO_Input</code>、<code>PA_0</code>を<code>GPIO_Output</code>に設定した。ピンを選ぶときには使用するマイコンボードのMbedのページ(ここでは<a href="https://os.mbed.com/platforms/ST-Nucleo-F446RE/">NUCLEO-F446RE</a>)の<code>Morpho headers</code>を見ながら選ぶといいかもしれない。<br />
-保存しコードを作成。<code>main.c</code>に処理を追記。</p>
+                        <h1 id="タイマー割り込みによるlチカ"><a class="header" href="#タイマー割り込みによるlチカ">タイマー割り込みによるLチカ</a></h1>
+<h3 id="hal_delayを使わないでlチカをする"><a class="header" href="#hal_delayを使わないでlチカをする">HAL_Delay()を使わないでLチカをする</a></h3>
+<p>今までLチカは以下のようなコードでしていた。</p>
+<pre><code class="language-c">HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_0);
+HAL_Delay(1000);
+</code></pre>
+<p>これは毎秒Lチカするプログラムである。このコードでは次にLEDの状態を変えるまで処理をすべて止めている。そのため、他の処理をしようとしてもできなかった。そんなときにタイマー割り込みを使用すれば他の処理を止めることなく、一定の周期である処理を実行することができる。<br />
+<code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Timers</code>-<code>TIM2</code>-<code>Mode</code>-<code>Clock Source</code>を<code>Internal Clock</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Counter Settings</code>-<code>Prescaler</code>を<code>15</code>、<code>Counter Period</code>を<code>999999</code>に、<code>Configuration</code>-<code>NVIC Setting</code>-<code>TIM2 global interrupt</code>を<code>Enable</code>に設定。今回は<code>TIM2</code>を使用した。<br />
+<code>main.c</code></p>
 <pre><code class="language-c">/* USER CODE BEGIN 2 */
-int psw1;
+HAL_TIM_Base_Start_IT(&amp;htim2);
 /* USER CODE END 2 */
 
-/* USER CODE BEGIN 3 */
-    psw1 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1); // ディジタル入力
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, psw1); // ディジタル出力
+/* USER CODE BEGIN 4 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim){
+	HAL_GPIO_TogglePin(GPIOxA, GPIO_Pin_0);
 }
-/* USER CODE END 3 */
+/* USER CODE END 4 */
 </code></pre>
-<p>使用する回路によって動作は異なるがプルアップ抵抗を用いたプッシュスイッチの回路であれば、スイッチを押すとLEDは消灯し、離すとLEDは点灯するだろう。</p>
+<p><code>HAL_TIM_PeriodElapsedCallback</code>関数は割り込みをした時に実行される関数であるため、そこにLチカのコードを書く。<br />
+割り込み周期は設定した<code>Prescaler</code>と<code>Counter Period</code>、内部クロック周波数で決まる。内部クロック周波数はデフォルトでは<code>16MHz</code>だが変更したいまたは。確認したい場合は<code>ioc</code>ファイルの<code>Clock Configuration</code>-<code>APB1 Timer clocks(MHz)</code>で確認する(たぶん)。割り込み周期は以下の式で求められる。<br />
+$$f = \frac{内部クロック周波数}{(Prescaler + 1)(Counter Period + 1)}$$<br />
+また、周期は周波数の逆数なので周期から求めると、<br />
+$$ T = \frac{1}{f} = \frac{(Prescaler + 1)(Counter Period + 1)}{内部クロック周波数} $$<br />
+となる。おすすめとしては<code>Prescaler</code>を<code>15</code>として<code>Counter Period</code>の値を変更するとわかりやすいかもしれない。<br />
+上記の例では<code>Prescaler</code>が<code>15</code>で<code>Counter Period</code>が<code>999999</code>なので周期は、<br />
+$$ \frac{(15 + 1)(999999 + 1)}{16 \times 10^6} = 1[s] $$<br />
+となり、毎秒Lチカするプログラムになっている。</p>
 <h4 id="参考"><a class="header" href="#参考">参考</a></h4>
 <ul>
-<li><a href="https://qiita.com/usashirou/items/30e522589db9f7dc8fe4">STM32CubeIDEを使ってみよう　How To STM32CubeIDE 日本語版　(4) スイッチを使ってみよう</a></li>
+<li><a href="https://qiita.com/usashirou/items/e02b798b4bf1b92a4546">STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (15) TimerでLチカしよう</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="chapter_10.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="chapter_3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="chapter_12.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="chapter_4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -190,11 +203,11 @@ int psw1;
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="chapter_10.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="chapter_3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="chapter_12.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="chapter_4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

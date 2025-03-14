@@ -269,6 +269,7 @@
 <ul>
 <li>引数に<code>UART_HandleTypeDef*</code>をもつ。使用する<code>USART</code>の構造体変数のポインタ<code>UART_HandleTypeDef*</code>を渡す。</li>
 <li><code>getDataIT(&amp;huart1);</code></li>
+<li>使用には<code>Configuration</code>-<code>NVIC Setting</code>-<code>USART1 global interrupt</code>を<code>Enable</code>に設定する必要がある。</li>
 <li>戻り値はなく、受信には割り込み使用し、データを受信する関数。</li>
 </ul>
 </li>

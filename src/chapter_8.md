@@ -104,6 +104,7 @@
 * getDataIT関数  
   * 引数に`UART_HandleTypeDef*`をもつ。使用する`USART`の構造体変数のポインタ`UART_HandleTypeDef*`を渡す。  
   * `getDataIT(&huart1);`  
+  * 使用には`Configuration`-`NVIC Setting`-`USART1 global interrupt`を`Enable`に設定する必要がある。  
   * 戻り値はなく、受信には割り込み使用し、データを受信する関数。  
 * AllShow関数  
   * 引数に`getdata`をもつ。構造体変数`getdata`を渡す。  

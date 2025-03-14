@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ロータリーエンコーダーを読む - development-CubeIDE</title>
+        <title>ロータリーエンコーダを読む - development-CubeIDE</title>
 
 
         <!-- Custom HTML head -->
@@ -152,10 +152,10 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ロータリーエンコーダーを読む"><a class="header" href="#ロータリーエンコーダーを読む">ロータリーエンコーダーを読む</a></h1>
-<p>エンコーダーは<a href="https://www.digikey.jp/ja/products/detail/same-sky-formerly-cui-devices-/AMT102-V/827015?gclsrc=aw.ds&amp;&amp;utm_adgroup=&amp;utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=Pmax%20Shopping_Product_Medium%20ROAS&amp;utm_term=&amp;productid=827015&amp;utm_content=&amp;utm_id=go_cmp-20190420439_adg-_ad-__dev-c_ext-_prd-827015_sig-Cj0KCQjwhMq-BhCFARIsAGvo0KepiliL5UMokL4bXzAq1rxj0amR6aMMbkjXr6ANuMr8IIp5-BnlpJoaArLIEALw_wcB&amp;gad_source=1&amp;gclid=Cj0KCQjwhMq-BhCFARIsAGvo0KepiliL5UMokL4bXzAq1rxj0amR6aMMbkjXr6ANuMr8IIp5-BnlpJoaArLIEALw_wcB&amp;gclsrc=aw.ds">AMT102-V</a>を使用した。</p>
-<p>エンコーダーを読むことで移動距離などを計算できる。エンコーダーにはA相とB相を用いて回転方向と回転量をアナログ値として読み取ることができるらしい。<br />
-マイコンのピンの<code>SPI◯_MISO</code>と<code>SPI◯_MOSI</code>の機能を使用していると予想。タイマーのエンコーダーモードを使用する。<br />
+                        <h1 id="ロータリーエンコーダを読む"><a class="header" href="#ロータリーエンコーダを読む">ロータリーエンコーダを読む</a></h1>
+<p>エンコーダは<a href="https://www.digikey.jp/ja/products/detail/same-sky-formerly-cui-devices-/AMT102-V/827015?gclsrc=aw.ds&amp;&amp;utm_adgroup=&amp;utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=Pmax%20Shopping_Product_Medium%20ROAS&amp;utm_term=&amp;productid=827015&amp;utm_content=&amp;utm_id=go_cmp-20190420439_adg-_ad-__dev-c_ext-_prd-827015_sig-Cj0KCQjwhMq-BhCFARIsAGvo0KepiliL5UMokL4bXzAq1rxj0amR6aMMbkjXr6ANuMr8IIp5-BnlpJoaArLIEALw_wcB&amp;gad_source=1&amp;gclid=Cj0KCQjwhMq-BhCFARIsAGvo0KepiliL5UMokL4bXzAq1rxj0amR6aMMbkjXr6ANuMr8IIp5-BnlpJoaArLIEALw_wcB&amp;gclsrc=aw.ds">AMT102-V</a>を使用した。</p>
+<p>エンコーダを読むことで移動距離などを計算できる。エンコーダにはA相とB相を用いて回転方向と回転量をアナログ値として読み取ることができるらしい。<br />
+マイコンのピンの<code>SPI◯_MISO</code>と<code>SPI◯_MOSI</code>の機能を使用していると予想。タイマーのエンコーダモードを使用する。<br />
 <code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Timers</code>-<code>TIM3</code>-<code>Mode</code>-<code>Combined Channels</code>を<code>Encoder Mode</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Counter Settings</code>-<code>Counter Period</code>を<code>8192</code>、<code>Encoder</code>-<code>Encoder Mode</code>を<code>Encoder Mode TI1 and TIT2</code>に設定。今回は<code>TIM3</code>を使用した。<br />
 <code>printf</code>を使用する。<br />
 <code>main.c</code></p>
@@ -191,8 +191,8 @@ while (1)
     HAL_Delay(100);
 /* USER CODE END WHILE */
 </code></pre>
-<p>エンコーダーの回転量を<code>TIM3 -&gt; CNT</code>でゲットし表示する。ただ<code>8192</code>を上回るまたは<code>0</code>を下回ると<code>8192</code>から<code>0</code>にまたは<code>0</code>から<code>8192</code>に飛ぶ。<br />
-それを解決するためにオーバーフローを検知しその回数を記録し<code>count</code>に反映させる。<code>HAL_TIM_PeriodElapsedCallback</code>関数はオーバーフローが起こった時に実行される関数であるため、そこにオーバーフローの回数を記録する。一回転が<code>8192</code>であるから<code>over * 8192</code>で増分を増やす。一回転が<code>8192</code>であるのはエンコーダーのデータシートに記載されていて内部のディップスイッチが<code>1</code>~<code>4</code>までが全て<code>0</code>になっている場合、一回転は<code>2048 * 4</code>の<code>8192</code>になると書かれている。<br />
+<p>エンコーダの回転量を<code>TIM3 -&gt; CNT</code>でゲットし表示する。ただ<code>8192</code>を上回るまたは<code>0</code>を下回ると<code>8192</code>から<code>0</code>にまたは<code>0</code>から<code>8192</code>に飛ぶ。<br />
+それを解決するためにオーバーフローを検知しその回数を記録し<code>count</code>に反映させる。<code>HAL_TIM_PeriodElapsedCallback</code>関数はオーバーフローが起こった時に実行される関数であるため、そこにオーバーフローの回数を記録する。一回転が<code>8192</code>であるから<code>over * 8192</code>で増分を増やす。一回転が<code>8192</code>であるのはエンコーダのデータシートに記載されていて内部のディップスイッチが<code>1</code>~<code>4</code>までが全て<code>0</code>になっている場合、一回転は<code>2048 * 4</code>の<code>8192</code>になると書かれている。<br />
 <img src="./resources/encoder/encoder_inside.JPG" alt="encoder_inside.JPG" /></p>
 <h3 id="角度を求めてみる"><a class="header" href="#角度を求めてみる">角度を求めてみる</a></h3>
 <p>回転量から回転回数や基準からの角度などを求められる。<code>((float)count / 8192) * 360</code>で1周<code>360°</code>になる。ただし<code>count</code>はもともと<code>int</code>型なので計算結果を少数にするために<code>float</code>型にキャスト変換する。また、以下のコードで角度を<code>0°</code>~<code>360°</code>にすることで何周しても同じ角度になるようにすることができる。<br />
