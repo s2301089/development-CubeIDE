@@ -312,7 +312,8 @@ while (1)
 }
 /* USER CODE END 3 */
 </code></pre>
-<p><code>100</code>がパルス幅にあたる部分であり、範囲は<code>0</code>~<code>255</code>にする。</p>
+<p><code>100</code>がパルス幅にあたる部分であり、範囲は<code>0</code>~<code>255</code>にする。<br />
+範囲やPWM周期などは<code>Prescaler</code>や<code>Counter Period</code>などから求められる。式については<a href="./chapter_12.html">ここ</a>に記載している。<code>Counter Period</code>が<code>範囲の個数-1</code>であるということだけは覚えていて欲しい。</p>
 <h4 id="参考-4"><a class="header" href="#参考-4">参考</a></h4>
 <ul>
 <li><a href="https://moons.link/post-632/">STM32 HALを使ってPWM出力してみる</a></li>
