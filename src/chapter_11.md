@@ -60,4 +60,4 @@ while(deg < 0){
 ![deg.png](./resources/encoder/deg.png)  
 
 #### 参考
-* [【Nucleo入門】Nucleo-F401でエンコーダ読み取り(STM32CubeIDE、macOS版)](https://www.shujima.work/entry/2019/05/28/221629){:target="_blank"}
+* [【Nucleo入門】Nucleo-F401でエンコーダ読み取り(STM32CubeIDE、macOS版)](https://www.shujima.work/entry/2019/05/28/221629)  
