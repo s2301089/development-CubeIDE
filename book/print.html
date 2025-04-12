@@ -225,7 +225,7 @@ uint8_t Out[8] = {0};
 <p><code>TeraTerm</code>を開いて<code>ファイル</code>-<code>新しい接続</code>-<code>シリアル</code>-<code>COM◯: STMicroelectronics STLink Virtual COM Port (COM◯)</code>-<code>OK</code>でマイコンと接続する。<code>設定</code>-<code>シリアルポート</code>-<code>スピード</code>を<code>CubeIDE</code>側で設定した<code>Baud Rate</code>を入力。ここでは<code>38400</code>と設定。<code>現在の接続を再設定</code>で設定を完了させる。</p>
 <h4 id="参考-1"><a class="header" href="#参考-1">参考</a></h4>
 <ul>
-<li><a href="./chapter_2.html">TeraTermでprintf出力</a></li>
+<li><a href="./chapter_2.html">TeraTermでprintf出力</a>{:target="_blank"}</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="名前を楽するlib"><a class="header" href="#名前を楽するlib">名前を楽する(lib)</a></h1>
 <p><code>GPIOA</code>とか<code>GPIO_PIN_1</code>とか<code>TIM_Channel_3</code>とか書くのがめんどくなったので楽にした。</p>
@@ -286,16 +286,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim){
 </code></pre>
 <p><code>HAL_TIM_PeriodElapsedCallback</code>関数は割り込みをした時に実行される関数であるため、そこにLチカのコードを書く。<br />
 割り込み周期は設定した<code>Prescaler</code>と<code>Counter Period</code>、内部クロック周波数で決まる。内部クロック周波数はデフォルトでは<code>16MHz</code>だが変更したいまたは。確認したい場合は<code>ioc</code>ファイルの<code>Clock Configuration</code>-<code>APB1 Timer clocks(MHz)</code>で確認する(たぶん)。割り込み周期は以下の式で求められる。<br />
-$$f = \frac{内部クロック周波数}{(Prescaler + 1)(Counter Period + 1)}$$<br />
+$$f = \frac{(内部クロック周波数)}{(Prescaler + 1) \times (Counter \space Period + 1)}$$<br />
 また、周期は周波数の逆数なので周期から求めると、<br />
-$$ T = \frac{1}{f} = \frac{(Prescaler + 1)(Counter Period + 1)}{内部クロック周波数} $$<br />
+$$ T = \frac{1}{f} = \frac{(Prescaler + 1) \times (Counter \space Period + 1)}{(内部クロック周波数)} $$<br />
 となる。おすすめとしては<code>Prescaler</code>を<code>15</code>として<code>Counter Period</code>の値を変更するとわかりやすいかもしれない。<br />
 上記の例では<code>Prescaler</code>が<code>15</code>で<code>Counter Period</code>が<code>999999</code>なので周期は、<br />
 $$ \frac{(15 + 1)(999999 + 1)}{16 \times 10^6} = 1[s] $$<br />
 となり、毎秒Lチカするプログラムになっている。</p>
 <h4 id="参考-3"><a class="header" href="#参考-3">参考</a></h4>
 <ul>
-<li><a href="https://qiita.com/usashirou/items/e02b798b4bf1b92a4546">STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (15) TimerでLチカしよう</a></li>
+<li><a href="https://qiita.com/usashirou/items/e02b798b4bf1b92a4546">STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (15) TimerでLチカしよう</a>{:target="_blank"}</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pwm出力"><a class="header" href="#pwm出力">PWM出力</a></h1>
 <h3 id="ledの明るさを変更したりモーターの回転速度を変更したりする"><a class="header" href="#ledの明るさを変更したりモーターの回転速度を変更したりする">LEDの明るさを変更したり、モーターの回転速度を変更したりする</a></h3>
@@ -403,7 +403,7 @@ while(deg &lt; 0){
 <img src="./resources/encoder/deg.png" alt="deg.png" /></p>
 <h4 id="参考-6"><a class="header" href="#参考-6">参考</a></h4>
 <ul>
-<li><a href="https://www.shujima.work/entry/2019/05/28/221629">【Nucleo入門】Nucleo-F401でエンコーダ読み取り(STM32CubeIDE、macOS版)</a></li>
+<li><a href="https://www.shujima.work/entry/2019/05/28/221629">【Nucleo入門】Nucleo-F401でエンコーダ読み取り(STM32CubeIDE、macOS版)</a>{:target="_blank"}</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="uart通信受信"><a class="header" href="#uart通信受信">UART通信(受信)</a></h1>
 <h3 id="arduinoなどからのデータをuartを使用して受け取る"><a class="header" href="#arduinoなどからのデータをuartを使用して受け取る">ArduinoなどからのデータをUARTを使用して受け取る</a></h3>
