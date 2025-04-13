@@ -31,4 +31,4 @@ $$ \frac{(15 + 1)(999999 + 1)}{16 \times 10^6} = 1[s] $$
 となり、毎秒Lチカするプログラムになっている。  
 
 #### 参考  
-* ![STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (15) TimerでLチカしよう](https://qiita.com/usashirou/items/e02b798b4bf1b92a4546)  
+* [STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (15) TimerでLチカしよう](https://qiita.com/usashirou/items/e02b798b4bf1b92a4546)  
