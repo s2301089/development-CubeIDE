@@ -43,7 +43,7 @@ while (1)
 
 エンコーダの回転量を`TIM3 -> CNT`でゲットし表示する。ただ`8192`を上回るまたは`0`を下回ると`8192`から`0`にまたは`0`から`8192`に飛ぶ。  
 それを解決するためにオーバーフローを検知しその回数を記録し`count`に反映させる。`HAL_TIM_PeriodElapsedCallback`関数はオーバーフローが起こった時に実行される関数であるため、そこにオーバーフローの回数を記録する。一回転が`8192`であるから`over * 8192`で増分を増やす。一回転が`8192`であるのはエンコーダのデータシートに記載されていて内部のディップスイッチが`1`~`4`までが全て`0`になっている場合、一回転は`2048 * 4`の`8192`になると書かれている。  
-![encoder_inside.JPG](../resources/encoder/encoder_inside.JPG =300x)  
+![encoder_inside.JPG](../resources/encoder/encoder_inside.JPG =400x center)  
 
 ### 角度を求めてみる  
 回転量から回転回数や基準からの角度などを求められる。`((float)count / 8192) * 360`で1周`360°`になる。ただし`count`はもともと`int`型なので計算結果を少数にするために`float`型にキャスト変換する。また、以下のコードで角度を`0°`~`360°`にすることで何周しても同じ角度になるようにすることができる。  
@@ -57,7 +57,7 @@ while(deg < 0){
 }
 ```  
 また、スイッチが押されたらその場所を基準としてそこからの角度を表示できるようにすると良いかもしれない。するとすれば`over`と`TIM3->CNT`をそれぞれ`0`にする必要がある。  
-![deg.png](../resources/encoder/deg.png =250x)  
+![deg.png](../resources/encoder/deg.png =250x center)  
 
 #### 参考
 * [【Nucleo入門】Nucleo-F401でエンコーダ読み取り(STM32CubeIDE、macOS版)](https://www.shujima.work/entry/2019/05/28/221629)  
