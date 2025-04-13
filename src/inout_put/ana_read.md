@@ -23,7 +23,7 @@ while (1)
 /* USER CODE END 3 */
 ```  
 `float`型を`printf`するために、設定を変更する。`[プロジェクト名]`を右クリック、`プロパティ`-`C/C++ ビルド`-`設定`-`ツール設定`-`MCU/MPU Settings`の`Use float with printf from newlib-nano`の項目にチェックを入れ、適用して閉じる。  
-今回は可変抵抗を用いてアナログ入力値の変化を出力した。`printf`を使えるようにするためには、他の設定やコードが必要。[これ](./chapter_2.md)を参考にした。  
+今回は可変抵抗を用いてアナログ入力値の変化を出力した。`printf`を使えるようにするためには、他の設定やコードが必要。[これ](../first_set/teraterm_printf_lib.md)を参考にした。  
 
 #### 参考
 * [STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (12) ADCを使ってみよう](https://qiita.com/usashirou/items/e6b5d0529524a140ebaf)

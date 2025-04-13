@@ -233,7 +233,7 @@ int _write(int file,char *ptr,int len){
 <li><a href="https://yukblog.net/stm32cubeide-printf-uart/">【便利】STM32CubeIDEでprintf【UART編】</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="teratermにprintf出力lib"><a class="header" href="#teratermにprintf出力lib">TeraTermにprintf出力(lib)</a></h1>
-<p><a href="first_set/./chapter_2.html">TeraTermにprintf出力</a>で<code>printf</code>する方法を紹介したがいちいち<code>int _write</code>とか書くのがめんどくさくなったので処理をまとめた。</p>
+<p><a href="first_set/./teraterm_printf.html">TeraTermにprintf出力</a>で<code>printf</code>する方法を紹介したがいちいち<code>int _write</code>とか書くのがめんどくさくなったので処理をまとめた。</p>
 <p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Connectivity</code>-<code>USART2</code>-<code>Mode</code>を<code>Asynchronous</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Basic Parameters</code>-<code>Baud Rate</code>を<code>38400</code>に設定。今回は<code>USART2</code>を使用した。<br />
 保存しコードを作成。<code>main.c</code>に処理を追記。</p>
 <pre><code class="language-c">/* USER CODE BEGIN Includes */
@@ -258,7 +258,7 @@ uint8_t Out[8] = {0};
 <p><code>TeraTerm</code>を開いて<code>ファイル</code>-<code>新しい接続</code>-<code>シリアル</code>-<code>COM◯: STMicroelectronics STLink Virtual COM Port (COM◯)</code>-<code>OK</code>でマイコンと接続する。<code>設定</code>-<code>シリアルポート</code>-<code>スピード</code>を<code>CubeIDE</code>側で設定した<code>Baud Rate</code>を入力。ここでは<code>38400</code>と設定。<code>現在の接続を再設定</code>で設定を完了させる。</p>
 <h4 id="参考-2"><a class="header" href="#参考-2">参考</a></h4>
 <ul>
-<li><a href="first_set/./chapter_2.html">TeraTermでprintf出力</a></li>
+<li><a href="first_set/./teraterm_printf.html">TeraTermでprintf出力</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ディジタル入出力"><a class="header" href="#ディジタル入出力">ディジタル入出力</a></h1>
 <h3 id="ledを点灯させたりプッシュスイッチの値を読み込んだりする"><a class="header" href="#ledを点灯させたりプッシュスイッチの値を読み込んだりする">LEDを点灯させたり、プッシュスイッチの値を読み込んだりする</a></h3>
@@ -309,7 +309,7 @@ $$ \frac{(15 + 1)(999999 + 1)}{16 \times 10^6} = 1[s] $$<br />
 となり、毎秒Lチカするプログラムになっている。</p>
 <h4 id="参考-4"><a class="header" href="#参考-4">参考</a></h4>
 <ul>
-<li><img src="https://qiita.com/usashirou/items/e02b798b4bf1b92a4546" alt="STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (15) TimerでLチカしよう" /></li>
+<li><a href="https://qiita.com/usashirou/items/e02b798b4bf1b92a4546">STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (15) TimerでLチカしよう</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pwm出力"><a class="header" href="#pwm出力">PWM出力</a></h1>
 <h3 id="ledの明るさを変更したりモーターの回転速度を変更したりする"><a class="header" href="#ledの明るさを変更したりモーターの回転速度を変更したりする">LEDの明るさを変更したり、モーターの回転速度を変更したりする</a></h3>
@@ -327,7 +327,7 @@ while (1)
 /* USER CODE END 3 */
 </code></pre>
 <p><code>100</code>がパルス幅にあたる部分であり、範囲は<code>0</code>~<code>255</code>にする。<br />
-範囲やPWM周期などは<code>Prescaler</code>や<code>Counter Period</code>などから求められる。式については<a href="./chapter_12.html">ここ</a>に記載している。<code>Counter Period</code>が<code>範囲の個数-1</code>であるということだけは覚えていて欲しい。</p>
+範囲やPWM周期などは<code>Prescaler</code>や<code>Counter Period</code>などから求められる。式については<a href="inout_put/./tim_Lchika.html">ここ</a>に記載している。<code>Counter Period</code>が<code>範囲の個数-1</code>であるということだけは覚えていて欲しい。</p>
 <h4 id="参考-5"><a class="header" href="#参考-5">参考</a></h4>
 <ul>
 <li><a href="https://moons.link/post-632/">STM32 HALを使ってPWM出力してみる</a></li>
@@ -355,7 +355,7 @@ while (1)
 /* USER CODE END 3 */
 </code></pre>
 <p><code>float</code>型を<code>printf</code>するために、設定を変更する。<code>[プロジェクト名]</code>を右クリック、<code>プロパティ</code>-<code>C/C++ ビルド</code>-<code>設定</code>-<code>ツール設定</code>-<code>MCU/MPU Settings</code>の<code>Use float with printf from newlib-nano</code>の項目にチェックを入れ、適用して閉じる。<br />
-今回は可変抵抗を用いてアナログ入力値の変化を出力した。<code>printf</code>を使えるようにするためには、他の設定やコードが必要。<a href="./chapter_2.html">これ</a>を参考にした。</p>
+今回は可変抵抗を用いてアナログ入力値の変化を出力した。<code>printf</code>を使えるようにするためには、他の設定やコードが必要。<a href="inout_put/../first_set/teraterm_printf_lib.html">これ</a>を参考にした。</p>
 <h4 id="参考-6"><a class="header" href="#参考-6">参考</a></h4>
 <ul>
 <li><a href="https://qiita.com/usashirou/items/e6b5d0529524a140ebaf">STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (12) ADCを使ってみよう</a></li>
@@ -402,7 +402,7 @@ while (1)
 </code></pre>
 <p>エンコーダの回転量を<code>TIM3 -&gt; CNT</code>でゲットし表示する。ただ<code>8192</code>を上回るまたは<code>0</code>を下回ると<code>8192</code>から<code>0</code>にまたは<code>0</code>から<code>8192</code>に飛ぶ。<br />
 それを解決するためにオーバーフローを検知しその回数を記録し<code>count</code>に反映させる。<code>HAL_TIM_PeriodElapsedCallback</code>関数はオーバーフローが起こった時に実行される関数であるため、そこにオーバーフローの回数を記録する。一回転が<code>8192</code>であるから<code>over * 8192</code>で増分を増やす。一回転が<code>8192</code>であるのはエンコーダのデータシートに記載されていて内部のディップスイッチが<code>1</code>~<code>4</code>までが全て<code>0</code>になっている場合、一回転は<code>2048 * 4</code>の<code>8192</code>になると書かれている。<br />
-<img src="./resources/encoder/encoder_inside.JPG" alt="encoder_inside.JPG" /></p>
+<img src="inout_put/../resources/encoder/encoder_inside.JPG" alt="encoder_inside.JPG" /></p>
 <h3 id="角度を求めてみる"><a class="header" href="#角度を求めてみる">角度を求めてみる</a></h3>
 <p>回転量から回転回数や基準からの角度などを求められる。<code>((float)count / 8192) * 360</code>で1周<code>360°</code>になる。ただし<code>count</code>はもともと<code>int</code>型なので計算結果を少数にするために<code>float</code>型にキャスト変換する。また、以下のコードで角度を<code>0°</code>~<code>360°</code>にすることで何周しても同じ角度になるようにすることができる。<br />
 <code>以下のコード</code></p>
@@ -414,7 +414,7 @@ while(deg &lt; 0){
 }
 </code></pre>
 <p>また、スイッチが押されたらその場所を基準としてそこからの角度を表示できるようにすると良いかもしれない。するとすれば<code>over</code>と<code>TIM3-&gt;CNT</code>をそれぞれ<code>0</code>にする必要がある。<br />
-<img src="./resources/encoder/deg.png" alt="deg.png" /></p>
+<img src="inout_put/../resources/encoder/deg.png" alt="deg.png" /></p>
 <h4 id="参考-7"><a class="header" href="#参考-7">参考</a></h4>
 <ul>
 <li><a href="https://www.shujima.work/entry/2019/05/28/221629">【Nucleo入門】Nucleo-F401でエンコーダ読み取り(STM32CubeIDE、macOS版)</a></li>
@@ -466,7 +466,7 @@ while (1)
 <li>使用する関数を記述。</li>
 </ol>
 <blockquote>
-<p>中には<code>printf</code>を使用する関数も含まれているため、<code>printf</code>を<code>UART通信</code>で使用できるようにしておく。<a href="./chapter_2.html">参考</a></p>
+<p>中には<code>printf</code>を使用する関数も含まれているため、<code>printf</code>を<code>UART通信</code>で使用できるようにしておく。<a href="connectivity/../first_set/teraterm_printf_lib.html">参考</a></p>
 </blockquote>
 <p><strong>使用例1</strong><br />
 <code>main.c</code></p>
@@ -571,7 +571,7 @@ while (1)
 <li>引数に<code>getdata</code>をもつ。構造体変数<code>getdata</code>を渡す。</li>
 <li><code>AllShow(data);</code></li>
 <li>戻り値はなく、構造体の中身を表示する関数。表示形式はアナログ値をもつスティックなどは整数3桁(空白埋め)で、ディジタル値をもつボタンなどは<code>0/1</code>で表示する。</li>
-<li><code>printf</code>関数を使用するため、<code>printf</code>を使用するためのコードが必要になる。<a href="./chapter_2.html">参考</a></li>
+<li><code>printf</code>関数を使用するため、<code>printf</code>を使用するためのコードが必要になる。<a href="connectivity/../first_set/teraterm_printf_lib.html">参考</a></li>
 </ul>
 </li>
 <li>AllShowP関数

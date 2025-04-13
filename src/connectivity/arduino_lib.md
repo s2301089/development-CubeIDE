@@ -9,7 +9,7 @@
 4. 使用する`USART`を`.iocファイル`で設定しコードを生成。  
 > `[プロジェクト名].ioc`-`Pinout & Configuration`-`Connectivity`-`USART1`-`Mode`を`Asynchronous`、`Configuration`-`Parameter Settings`-`Basic Parameters`-`Baud Rate`を`38400`に設定。今回は`USART1`を使用した。  
 5. 使用する関数を記述。  
-> 中には`printf`を使用する関数も含まれているため、`printf`を`UART通信`で使用できるようにしておく。[参考](./chapter_2.md)  
+> 中には`printf`を使用する関数も含まれているため、`printf`を`UART通信`で使用できるようにしておく。[参考](../first_set/teraterm_printf_lib.md)  
 
 **使用例1**  
 `main.c`  
@@ -110,7 +110,7 @@
   * 引数に`getdata`をもつ。構造体変数`getdata`を渡す。  
   * `AllShow(data);`  
   * 戻り値はなく、構造体の中身を表示する関数。表示形式はアナログ値をもつスティックなどは整数3桁(空白埋め)で、ディジタル値をもつボタンなどは`0/1`で表示する。  
-  * `printf`関数を使用するため、`printf`を使用するためのコードが必要になる。[参考](./chapter_2.md)  
+  * `printf`関数を使用するため、`printf`を使用するためのコードが必要になる。[参考](../first_set/teraterm_printf_lib.md)  
 * AllShowP関数  
   * 引数や戻り値は`AllShow`関数と同じである。
   * 表示形式はスティックなどは`AllShow`関数と同じだが、ボタンなどは`AllShow`関数と異なり、押されているボタンを名前で表示する。送信側の`Arduino`のシリアルモニタと同じように表示される。  

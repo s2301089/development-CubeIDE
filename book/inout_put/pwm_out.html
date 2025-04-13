@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>UART通信(受信) - development-CubeIDE</title>
+        <title>PWM出力 - development-CubeIDE</title>
 
 
         <!-- Custom HTML head -->
@@ -12,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -35,11 +35,11 @@
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -91,7 +91,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -125,7 +125,7 @@
                     <h1 class="menu-title">development-CubeIDE</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -154,42 +154,37 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="uart通信受信"><a class="header" href="#uart通信受信">UART通信(受信)</a></h1>
-<h3 id="arduinoなどからのデータをuartを使用して受け取る"><a class="header" href="#arduinoなどからのデータをuartを使用して受け取る">ArduinoなどからのデータをUARTを使用して受け取る</a></h3>
-<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Connectivity</code>-<code>USART1</code>-<code>Mode</code>を<code>Asynchronous</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Basic Parameters</code>-<code>Baud Rate</code>を<code>38400</code>に設定。今回は<code>USART1</code>を使用した。<br />
+                        <h1 id="pwm出力"><a class="header" href="#pwm出力">PWM出力</a></h1>
+<h3 id="ledの明るさを変更したりモーターの回転速度を変更したりする"><a class="header" href="#ledの明るさを変更したりモーターの回転速度を変更したりする">LEDの明るさを変更したり、モーターの回転速度を変更したりする</a></h3>
+<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Timers</code>-<code>TIM3</code>-<code>Mode</code>-<code>Channel3</code>を<code>PWM Generation CH3</code>、<code>Configuration</code>-<code>Parameter Settings</code>-<code>Counter Settings</code>-<code>Prescaler</code>を<del><code>83</code></del><code>4</code>、<code>Counter Period</code>を<del><code>999</code></del><code>255</code>、<code>PWM Generation Channel3</code>-<code>Output compare preload</code>を<code>Disable</code>に設定。今回は<code>TIM3</code>を使用した。<br />
 保存しコードを作成。<code>main.c</code>に処理を追記。</p>
-<pre><code class="language-c">/* USER CODE BEGIN 2 */
-char getdata;
-/* USER CODE END 2 */
-
-/* Infinite loop */
-/* USER CODE BEGIN WHILE */
+<pre><code class="language-c">/* USER CODE BEGIN WHILE */
 while (1)
 {
+    HAL_TIM_PWM_Start(&amp;htim3, TIM_CHANNEL_3);
 /* USER CODE END WHILE */
 
 /* USER CODE BEGIN 3 */
-    if(HAL_UART_Receive(&amp;huart1, &amp;getdata, 1, 10) == HAL_OK){
-        printf("%x\r\n",getdata);
-    }
+    __HAL_TIM_SET_COMPARE(&amp;htim3,TIM_CHANNEL_3,100);
 }
 /* USER CODE END 3 */
 </code></pre>
-<p>受け取ったデータを<code>printf</code>する。たとえば<code>Arduino</code>側でスイッチの値を送るとしたら<code>TeraTerm</code>の画面にはそのスイッチの値が表示されるだろう。</p>
+<p><code>100</code>がパルス幅にあたる部分であり、範囲は<code>0</code>~<code>255</code>にする。<br />
+範囲やPWM周期などは<code>Prescaler</code>や<code>Counter Period</code>などから求められる。式については<a href="./tim_Lchika.html">ここ</a>に記載している。<code>Counter Period</code>が<code>範囲の個数-1</code>であるということだけは覚えていて欲しい。</p>
 <h4 id="参考"><a class="header" href="#参考">参考</a></h4>
 <ul>
-<li><a href="https://qiita.com/usashirou/items/5a2c9e4fd35c261c4f3a">STM32CubeIDEを使ってみよう　How To STM32CubeIDE 日本語版　(6) 　UARTを使ってみよう(2)</a></li>
+<li><a href="https://moons.link/post-632/">STM32 HALを使ってPWM出力してみる</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="chapter_11.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../inout_put/tim_Lchika.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="chapter_8.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../inout_put/ana_read.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -199,11 +194,11 @@ while (1)
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="chapter_11.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../inout_put/tim_Lchika.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="chapter_8.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../inout_put/ana_read.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -218,13 +213,13 @@ while (1)
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

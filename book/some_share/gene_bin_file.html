@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>アナログ入力 - development-CubeIDE</title>
+        <title>binファイルの生成 - development-CubeIDE</title>
 
 
         <!-- Custom HTML head -->
@@ -12,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -35,11 +35,11 @@
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -91,7 +91,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -125,7 +125,7 @@
                     <h1 class="menu-title">development-CubeIDE</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -154,47 +154,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="アナログ入力"><a class="header" href="#アナログ入力">アナログ入力</a></h1>
-<h3 id="可変抵抗の値を読み取ったりセンサの値を読み取ったりする"><a class="header" href="#可変抵抗の値を読み取ったりセンサの値を読み取ったりする">可変抵抗の値を読み取ったり、センサの値を読み取ったりする</a></h3>
-<p><code>[プロジェクト名].ioc</code>-<code>Pinout &amp; Configuration</code>-<code>Pinout view</code>から使いたいピンを選択する。今回は<code>PA_4</code>を<code>ADC1_IN4</code>に設定した。ピンを選ぶときには使用するマイコンボードのMbedのページ(ここでは<a href="https://os.mbed.com/platforms/ST-Nucleo-F446RE/">NUCLEO-F446RE</a>)の<code>Morpho headers</code>を見ながら選ぶといいかもしれない。<br />
-保存しコードを作成。<code>main.c</code>に処理を追記。</p>
-<pre><code class="language-c">/* USER CODE BEGIN 2 */
-float resi1;
-/* USER CODE END 2 */
-
-/* USER CODE BEGIN WHILE */
-while (1)
-{
-    HAL_ADC_Start(&amp;hadc1);
-/* USER CODE END WHILE */
-
-/* USER CODE BEGIN 3 */
-    HAL_ADC_PollForConversion(&amp;hadc1, 100);
-    resi1 = HAL_ADC_GetValue(&amp;hadc1);
-    printf("%f\r\n",resi1);
-    HAL_Delay(250);
-}
-/* USER CODE END 3 */
-</code></pre>
-<p><code>float</code>型を<code>printf</code>するために、設定を変更する。<code>[プロジェクト名]</code>を右クリック、<code>プロパティ</code>-<code>C/C++ ビルド</code>-<code>設定</code>-<code>ツール設定</code>-<code>MCU/MPU Settings</code>の<code>Use float with printf from newlib-nano</code>の項目にチェックを入れ、適用して閉じる。<br />
-今回は可変抵抗を用いてアナログ入力値の変化を出力した。<code>printf</code>を使えるようにするためには、他の設定やコードが必要。<a href="./chapter_2.html">これ</a>を参考にした。</p>
+                        <h1 id="binファイルの生成"><a class="header" href="#binファイルの生成">binファイルの生成</a></h1>
+<h3 id="エクスプローラーなどからマイコンに直接書き込めるようにbinファイルを生成する"><a class="header" href="#エクスプローラーなどからマイコンに直接書き込めるようにbinファイルを生成する">エクスプローラーなどからマイコンに直接書き込めるようにbinファイルを生成する</a></h3>
+<p><code>CubeIDE</code>では<code>binファイル</code>は実行時やデバッグ時に自動で生成され、実行時、デバッグ時毎に上書き保存される。設定を変更するだけで生成されるようになる。<br />
+<code>[プロジェクト名]</code>を右クリック、<code>プロパティ</code>-<code>C/C++ ビルド</code>-<code>設定</code>-<code>ツール設定</code>-<code>MCU/MPU Post build outputs</code>の<code>Convert to binary file</code>の項目にチェックを入れ、適用して閉じる。
+<code>binファイル</code>の他にも<code>HEXファイル</code>や<code>SRECファイル</code>などの他のファイル形式のファイルも設定すれば、生成できる。<br />
+<code>binファイル</code>は生成されるとプロジェクトの中の<code>Debugフォルダ</code>に<code>[プロジェクト名].bin</code>という名前で生成される。</p>
 <h4 id="参考"><a class="header" href="#参考">参考</a></h4>
 <ul>
-<li><a href="https://qiita.com/usashirou/items/e6b5d0529524a140ebaf">STM32CubeIDEを使ってみよう How To STM32CubeIDE 日本語版 (12) ADCを使ってみよう</a></li>
-<li><a href="https://yukblog.net/stm32cubeide-printf-float/">STM32CubeIDEのprintfでfloatが使えない件の対処方法</a></li>
+<li><a href="https://yukblog.net/stm32cubeide-hex/">STM32CubeIDEでHEXファイルを作成する方法</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="chapter_4.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../connectivity/arduino_lib.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="chapter_11.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -202,13 +180,10 @@ while (1)
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="chapter_4.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../connectivity/arduino_lib.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="chapter_11.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
@@ -221,13 +196,13 @@ while (1)
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

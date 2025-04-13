@@ -12,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -35,11 +35,11 @@
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -91,7 +91,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -125,7 +125,7 @@
                     <h1 class="menu-title">development-CubeIDE</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -195,7 +195,7 @@ while (1)
 </code></pre>
 <p>エンコーダの回転量を<code>TIM3 -&gt; CNT</code>でゲットし表示する。ただ<code>8192</code>を上回るまたは<code>0</code>を下回ると<code>8192</code>から<code>0</code>にまたは<code>0</code>から<code>8192</code>に飛ぶ。<br />
 それを解決するためにオーバーフローを検知しその回数を記録し<code>count</code>に反映させる。<code>HAL_TIM_PeriodElapsedCallback</code>関数はオーバーフローが起こった時に実行される関数であるため、そこにオーバーフローの回数を記録する。一回転が<code>8192</code>であるから<code>over * 8192</code>で増分を増やす。一回転が<code>8192</code>であるのはエンコーダのデータシートに記載されていて内部のディップスイッチが<code>1</code>~<code>4</code>までが全て<code>0</code>になっている場合、一回転は<code>2048 * 4</code>の<code>8192</code>になると書かれている。<br />
-<img src="./resources/encoder/encoder_inside.JPG" alt="encoder_inside.JPG" /></p>
+<img src="../resources/encoder/encoder_inside.JPG" alt="encoder_inside.JPG" /></p>
 <h3 id="角度を求めてみる"><a class="header" href="#角度を求めてみる">角度を求めてみる</a></h3>
 <p>回転量から回転回数や基準からの角度などを求められる。<code>((float)count / 8192) * 360</code>で1周<code>360°</code>になる。ただし<code>count</code>はもともと<code>int</code>型なので計算結果を少数にするために<code>float</code>型にキャスト変換する。また、以下のコードで角度を<code>0°</code>~<code>360°</code>にすることで何周しても同じ角度になるようにすることができる。<br />
 <code>以下のコード</code></p>
@@ -207,7 +207,7 @@ while(deg &lt; 0){
 }
 </code></pre>
 <p>また、スイッチが押されたらその場所を基準としてそこからの角度を表示できるようにすると良いかもしれない。するとすれば<code>over</code>と<code>TIM3-&gt;CNT</code>をそれぞれ<code>0</code>にする必要がある。<br />
-<img src="./resources/encoder/deg.png" alt="deg.png" /></p>
+<img src="../resources/encoder/deg.png" alt="deg.png" /></p>
 <h4 id="参考"><a class="header" href="#参考">参考</a></h4>
 <ul>
 <li><a href="https://www.shujima.work/entry/2019/05/28/221629">【Nucleo入門】Nucleo-F401でエンコーダ読み取り(STM32CubeIDE、macOS版)</a></li>
@@ -217,11 +217,11 @@ while(deg &lt; 0){
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="chapter_5.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../inout_put/ana_read.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="chapter_6.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../connectivity/uart_rev.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -231,11 +231,11 @@ while(deg &lt; 0){
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="chapter_5.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../inout_put/ana_read.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="chapter_6.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../connectivity/uart_rev.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -250,13 +250,13 @@ while(deg &lt; 0){
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

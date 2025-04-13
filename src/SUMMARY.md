@@ -1,5 +1,5 @@
 # はじめに
--[前提条件等](./chapter_1.md)
+-[前提条件等](./first.md)
 
 # 基本設定
 - [TeraTermにprintf出力](./first_set/teraterm_printf.md)
@@ -7,15 +7,15 @@
 - [名前を楽する(lib)](./first_set/teraterm_printf_lib.md)
 
 # 入出力
-- [ディジタル入出力](./chapter_3.md)
-- [タイマー割り込みによるLチカ](./chapter_12.md)
-- [PWM出力](./chapter_4.md)
-- [アナログ入力](./chapter_5.md)
-- [ロータリーエンコーダを読む](./chapter_11.md)
+- [ディジタル入出力](./inout_put/digi_io.md)
+- [タイマー割り込みによるLチカ](./inout_put/tim_Lchika.md)
+- [PWM出力](./inout_put/pwm_out.md)
+- [アナログ入力](./inout_put/ana_read.md)
+- [ロータリーエンコーダを読む](./inout_put/rorikon_read.md)
 
 # 通信
-- [UART通信(受信)](./chapter_6.md)
-- [Arduinoとの通信(lib)](./chapter_8.md)
+- [UART通信(受信)](./connectivity/uart_rev.md)
+- [Arduinoとの通信(lib)](./connectivity/arduino_lib.md)
 
 # 共有
-- [binファイルの生成](./chapter_7.md)
+- [binファイルの生成](./some_share/gene_bin_file.md)
