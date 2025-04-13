@@ -3,8 +3,8 @@
 
 # 基本設定
 - [TeraTermにprintf出力](./first_set/teraterm_printf.md)
-- [TeraTermにprintf出力(lib)](./first_set/teraterm_printf.md)
-- [名前を楽する(lib)](./first_set/teraterm_printf_lib.md)
+- [TeraTermにprintf出力(lib)](./first_set/teraterm_printf_lib.md)
+- [名前を楽する(lib)](./first_set/manydef.md)
 
 # 入出力
 - [ディジタル入出力](./inout_put/digi_io.md)
