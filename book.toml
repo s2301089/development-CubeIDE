@@ -7,3 +7,6 @@ title = "development-CubeIDE"
 
 [output.html]
 mathjax-support = true
+
+[preprocessor.image-size]
+command = "mdbook-image-size"
